@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: jotter
+      POSTGRES_PASSWORD: jotter
+      POSTGRES_DB: jotter
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

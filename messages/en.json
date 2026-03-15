@@ -28,5 +28,8 @@
   },
   "validation": {
     "textRequired": "Text is required"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
   }
 }

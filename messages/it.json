@@ -28,5 +28,8 @@
   },
   "validation": {
     "textRequired": "Il testo è obbligatorio"
+  },
+  "theme": {
+    "toggle": "Cambia tema"
   }
 }

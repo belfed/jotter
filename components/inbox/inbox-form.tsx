@@ -1,22 +1,32 @@
 "use client";
 
 import { useActionState, useRef, useEffect } from "react";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { createInboxItem } from "@/app/actions/inbox";
 import type { ActionState } from "@/lib/types";
 import type { InboxItem } from "@/app/generated/prisma/client";
 
-export function InboxForm() {
-  const [state, action, pending] = useActionState<
-    ActionState<InboxItem>,
-    FormData
-  >(createInboxItem, null);
+export function InboxForm({ onSubmit }: { onSubmit: (text: string) => void }) {
+  const [state, action, pending] = useActionState<ActionState<InboxItem>, FormData>(
+    async (prevState, formData) => {
+      const text = formData.get("text");
+      if (typeof text === "string" && text.trim()) {
+        onSubmit(text.trim());
+      }
+      return createInboxItem(prevState, formData);
+    },
+    null,
+  );
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (state?.success) {
       formRef.current?.reset();
+      toast.success("Item saved");
+    } else if (state?.success === false) {
+      toast.error(state.error);
     }
     inputRef.current?.focus();
   }, [state]);
@@ -31,9 +41,6 @@ export function InboxForm() {
         disabled={pending}
         autoFocus
       />
-      {state?.success === false && (
-        <p className="mt-1 text-sm text-destructive">{state.error}</p>
-      )}
     </form>
   );
 }

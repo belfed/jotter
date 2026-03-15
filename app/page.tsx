@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
-import { InboxForm } from "@/components/inbox/inbox-form";
-import { InboxList } from "@/components/inbox/inbox-list";
+
+import { Inbox } from "@/components/inbox/inbox";
 
 export default async function Home() {
   const items = await prisma.inboxItem.findMany({
@@ -9,9 +9,8 @@ export default async function Home() {
 
   return (
     <main className="mx-auto max-w-2xl p-6 space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight">       Inbox</h1>
-      <InboxForm />
-      <InboxList items={items} />
+      <h1 className="text-2xl font-bold tracking-tight">Inbox</h1>
+      <Inbox items={items} />
     </main>
   );
 }

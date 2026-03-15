@@ -1,12 +1,13 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-import { InboxItemCreateInput } from "../generated/prisma/models";
-import { InboxItem } from "../generated/prisma/client";
+import { revalidatePath } from "next/cache";
 
 import { ActionState } from "@/lib/types";
 import { to } from "@/lib/utils";
-import { revalidatePath } from "next/cache";
+
+import prisma from "@/lib/prisma";
+import { InboxItemCreateInput } from "../generated/prisma/models";
+import { InboxItem } from "../generated/prisma/client";
 
 export const createInboxItem = async (
   _previousState: ActionState<InboxItem>,

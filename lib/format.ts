@@ -8,12 +8,12 @@ export function formatRelativeTime(date: Date): string {
   if (minutes < 60) return `${minutes} min fa`;
 
   const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours} ore fa`;
+  if (hours < 24) return `${hours} ${hours === 1 ? "ora" : "ore"} fa`;
 
   if (hours < 48) return "ieri";
 
   const days = Math.floor(hours / 24);
-  if (days < 7) return `${days} giorni fa`;
+  if (days < 7) return `${days} ${days === 1 ? "giorno" : "giorni"} fa`;
 
   return date.toLocaleDateString();
 }

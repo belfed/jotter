@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useRef, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { createInboxItem } from "@/app/actions/inbox";
 import { CommandDialog } from "@/components/ui/command";
@@ -10,6 +11,8 @@ import type { ActionState } from "@/lib/types";
 import type { InboxItem } from "@/app/generated/prisma/client";
 
 export function CommandBar() {
+  const t = useTranslations("commandBar");
+  const tToast = useTranslations("toast");
   const [open, setOpen] = useState(false);
   const [state, action, pending] = useActionState<ActionState<InboxItem>, FormData>(
     createInboxItem,
@@ -32,7 +35,7 @@ export function CommandBar() {
   useEffect(() => {
     if (state?.success) {
       formRef.current?.reset();
-      toast.success("Item saved");
+      toast.success(tToast("itemSaved"));
     } else if (state?.success === false) {
       toast.error(state.error);
     }
@@ -43,14 +46,14 @@ export function CommandBar() {
     <CommandDialog
       open={open}
       onOpenChange={setOpen}
-      title="Jotter"
-      description="Jot something down"
+      title={t("title")}
+      description={t("description")}
     >
       <form ref={formRef} action={action} className="p-3">
         <Input
           ref={inputRef}
           name="text"
-          placeholder="Jot something..."
+          placeholder={t("placeholder")}
           autoComplete="off"
           disabled={pending}
           autoFocus
@@ -59,10 +62,10 @@ export function CommandBar() {
       </form>
       <div className="flex items-center justify-end gap-3 border-t px-3 py-2">
         <span className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Kbd>Enter</Kbd> to save
+          <Kbd>Enter</Kbd> {t("saveHint")}
         </span>
         <span className="flex items-center gap-1 text-xs text-muted-foreground">
-          <Kbd>Esc</Kbd> to close
+          <Kbd>Esc</Kbd> {t("closeHint")}
         </span>
       </div>
     </CommandDialog>

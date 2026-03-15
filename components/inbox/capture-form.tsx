@@ -1,12 +1,14 @@
 "use client";
 
 import { useActionState, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { createInboxItem } from "@/app/actions/inbox";
 import type { ActionState } from "@/lib/types";
 import type { InboxItem } from "@/app/generated/prisma/client";
 
 export function CaptureForm() {
+  const t = useTranslations("capture");
   const [state, action, pending] = useActionState<ActionState<InboxItem>, FormData>(
     createInboxItem,
     null,
@@ -27,7 +29,7 @@ export function CaptureForm() {
       <Input
         ref={inputRef}
         name="text"
-        placeholder="Quick capture..."
+        placeholder={t("placeholder")}
         autoComplete="off"
         disabled={pending}
         autoFocus

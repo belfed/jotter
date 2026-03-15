@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
+import { getTranslations } from "next-intl/server";
 import { ActionState } from "@/lib/types";
 import { to } from "@/lib/utils";
 
@@ -12,10 +13,11 @@ export const createInboxItem = async (
   _previousState: ActionState<InboxItem>,
   formData: FormData,
 ): Promise<ActionState<InboxItem>> => {
+  const t = await getTranslations();
   const text = formData.get("text");
 
   if (typeof text !== "string" || text.trim() === "") {
-    return { success: false, error: "Text is required" };
+    return { success: false, error: t("validation.textRequired") };
   }
 
   const [error, item] = await to(
@@ -25,7 +27,7 @@ export const createInboxItem = async (
   );
 
   if (error) {
-    return { success: false, error: "Failed to save item" };
+    return { success: false, error: t("toast.failedToSave") };
   }
 
   revalidatePath("/");

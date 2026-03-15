@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { createInboxItem } from "@/app/actions/inbox";
@@ -8,6 +9,7 @@ import type { ActionState } from "@/lib/types";
 import type { InboxItem } from "@/app/generated/prisma/client";
 
 export function InboxForm({ onSubmit }: { onSubmit: (text: string) => void }) {
+  const t = useTranslations();
   const [state, action, pending] = useActionState<ActionState<InboxItem>, FormData>(
     async (prevState, formData) => {
       const text = formData.get("text");
@@ -24,7 +26,7 @@ export function InboxForm({ onSubmit }: { onSubmit: (text: string) => void }) {
   useEffect(() => {
     if (state?.success) {
       formRef.current?.reset();
-      toast.success("Item saved");
+      toast.success(t("toast.itemSaved"));
     } else if (state?.success === false) {
       toast.error(state.error);
     }
@@ -36,7 +38,7 @@ export function InboxForm({ onSubmit }: { onSubmit: (text: string) => void }) {
       <Input
         ref={inputRef}
         name="text"
-        placeholder="What's on your mind?"
+        placeholder={t("inboxForm.placeholder")}
         autoComplete="off"
         disabled={pending}
         autoFocus

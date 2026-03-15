@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "title": "Jotter"
+  },
+  "inbox": {
+    "title": "Inbox",
+    "empty": "Your inbox is empty!",
+    "emptyHint": "to jot something",
+    "shortcutHint": "to jot"
+  },
+  "commandBar": {
+    "title": "Jotter",
+    "description": "Jot something down",
+    "placeholder": "Jot something...",
+    "saveHint": "to save",
+    "closeHint": "to close"
+  },
+  "capture": {
+    "title": "Jotter — Capture",
+    "placeholder": "Quick capture..."
+  },
+  "inboxForm": {
+    "placeholder": "What's on your mind?"
+  },
+  "toast": {
+    "itemSaved": "Item saved",
+    "failedToSave": "Failed to save item"
+  },
+  "validation": {
+    "textRequired": "Text is required"
+  }
+}

@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { formatRelativeTime } from "@/lib/format";
 
 import type { InboxItem } from "@/app/generated/prisma/client";
@@ -18,12 +21,13 @@ function InboxListItem({ item }: { item: InboxItem }) {
 }
 
 function InboxEmpty() {
+  const t = useTranslations("inbox");
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-32 text-muted-foreground">
       <InboxIcon className="size-12 opacity-20" />
-      <p className="text-lg font-medium">La tua inbox è vuota!</p>
+      <p className="text-lg font-medium">{t("empty")}</p>
       <p className="flex items-center gap-1.5 text-sm">
-        Premi <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd> per jottare qualcosa
+        <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd> {t("emptyHint")}
       </p>
     </div>
   );

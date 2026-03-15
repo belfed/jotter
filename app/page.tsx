@@ -10,9 +10,7 @@ import {
 } from "@/components/ui/table";
 
 export default async function Home() {
-  const items = await prisma.inboxItem.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+  const items = await prisma.inboxItem.findMany();
 
   return (
     <main className="mx-auto max-w-2xl p-6 space-y-6">

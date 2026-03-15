@@ -12,20 +12,24 @@ export function InboxForm() {
     FormData
   >(createInboxItem, null);
   const formRef = useRef<HTMLFormElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (state?.success) {
       formRef.current?.reset();
     }
+    inputRef.current?.focus();
   }, [state]);
 
   return (
     <form ref={formRef} action={action}>
       <Input
+        ref={inputRef}
         name="text"
         placeholder="What's on your mind?"
         autoComplete="off"
         disabled={pending}
+        autoFocus
       />
       {state?.success === false && (
         <p className="mt-1 text-sm text-destructive">{state.error}</p>

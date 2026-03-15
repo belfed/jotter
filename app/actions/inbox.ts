@@ -3,10 +3,8 @@
 import { revalidatePath } from "next/cache";
 
 import { ActionState } from "@/lib/types";
-import { to } from "@/lib/utils";
 
 import prisma from "@/lib/prisma";
-import { InboxItemCreateInput } from "../generated/prisma/models";
 import { InboxItem } from "../generated/prisma/client";
 
 export const createInboxItem = async (
@@ -18,18 +16,13 @@ export const createInboxItem = async (
   if (typeof text !== "string" || text.trim() === "") {
     return { success: false, error: "Text is required" };
   }
-  const data: Pick<InboxItemCreateInput, "text"> = { text };
+  const data = { text: text.trim() };
 
-  const [error, item] = await to(
-    prisma.inboxItem.create({
-      data,
-    }),
-  );
-
-  if (error) {
-    return { success: false, error: error.message };
-  }
+  const item = await prisma.inboxItem.create({
+    data,
+  });
 
   revalidatePath("/");
+
   return { success: true, data: item };
 };

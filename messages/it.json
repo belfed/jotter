@@ -6,12 +6,16 @@
     "title": "Inbox",
     "empty": "La tua inbox è vuota!",
     "emptyHint": "per annotare qualcosa",
-    "shortcutHint": "per annotare"
+    "shortcutHint": "per annotare",
+    "delete": "Elimina"
   },
   "commandBar": {
     "title": "Jotter",
     "description": "Annota qualcosa",
     "placeholder": "Annota qualcosa...",
+    "inboxOption": "Inbox",
+    "taskOption": "Task",
+    "navigateHint": "per navigare",
     "saveHint": "per salvare",
     "closeHint": "per chiudere"
   },
@@ -23,13 +27,23 @@
     "placeholder": "Cosa hai in mente?"
   },
   "toast": {
-    "itemSaved": "Item salvato",
-    "failedToSave": "Salvataggio fallito"
+    "inboxSaved": "Item salvato",
+    "inboxDeleted": "Item eliminato",
+    "taskSaved": "Task creato",
+    "failedToSave": "Salvataggio fallito",
+    "failedToDelete": "Eliminazione fallita"
   },
   "validation": {
     "textRequired": "Il testo è obbligatorio"
   },
   "theme": {
     "toggle": "Cambia tema"
+  },
+  "time": {
+    "now": "adesso",
+    "minutesAgo": "{count, plural, one {# minuto fa} other {# minuti fa}}",
+    "hoursAgo": "{count, plural, one {# ora fa} other {# ore fa}}",
+    "yesterday": "ieri",
+    "daysAgo": "{count, plural, one {# giorno fa} other {# giorni fa}}"
   }
 }

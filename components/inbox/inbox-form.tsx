@@ -3,10 +3,13 @@
 import { useActionState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import { createInboxItem } from "@/app/actions/inbox";
+
 import type { ActionState } from "@/lib/types";
 import type { InboxItem } from "@/app/generated/prisma/client";
+
+import { createInboxItem } from "@/app/actions/inbox";
+
+import { Input } from "@/components/ui/input";
 
 export function InboxForm({ onSubmit }: { onSubmit: (text: string) => void }) {
   const t = useTranslations();
@@ -26,7 +29,7 @@ export function InboxForm({ onSubmit }: { onSubmit: (text: string) => void }) {
   useEffect(() => {
     if (state?.success) {
       formRef.current?.reset();
-      toast.success(t("toast.itemSaved"));
+      toast.success(t("toast.inboxSaved"));
     } else if (state?.success === false) {
       toast.error(state.error);
     }

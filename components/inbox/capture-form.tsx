@@ -2,10 +2,13 @@
 
 import { useActionState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { Input } from "@/components/ui/input";
-import { createInboxItem } from "@/app/actions/inbox";
+
 import type { ActionState } from "@/lib/types";
 import type { InboxItem } from "@/app/generated/prisma/client";
+
+import { createInboxItem } from "@/app/actions/inbox";
+
+import { Input } from "@/components/ui/input";
 
 export function CaptureForm() {
   const t = useTranslations("capture");

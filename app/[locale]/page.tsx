@@ -1,8 +1,10 @@
+import { getTranslations } from "next-intl/server";
+
 import prisma from "@/lib/prisma";
+
 import { InboxList } from "@/components/inbox/inbox-list";
 import { Kbd } from "@/components/ui/kbd";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { getTranslations } from "next-intl/server";
 
 export default async function Home() {
   const t = await getTranslations("inbox");

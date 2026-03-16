@@ -1,7 +1,9 @@
 "use client";
 
 import { useOptimistic } from "react";
+
 import type { InboxItem } from "@/app/generated/prisma/client";
+
 import { InboxForm } from "@/components/inbox/inbox-form";
 import { InboxList } from "@/components/inbox/inbox-list";
 

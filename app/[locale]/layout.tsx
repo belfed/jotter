@@ -1,6 +1,8 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
+
 import { routing } from "@/i18n/routing";
+
 import { Toaster } from "@/components/ui/sonner";
 import { CommandBar } from "@/components/command-bar";
 

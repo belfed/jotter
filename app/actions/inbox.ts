@@ -1,13 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
 import { getTranslations } from "next-intl/server";
+
 import { ActionState } from "@/lib/types";
-import { to } from "@/lib/utils";
+import { InboxItem } from "@/app/generated/prisma/client";
 
 import prisma from "@/lib/prisma";
-import { InboxItem } from "../generated/prisma/client";
+import { to } from "@/lib/utils";
 
 export const createInboxItem = async (
   _previousState: ActionState<InboxItem>,
@@ -34,3 +34,19 @@ export const createInboxItem = async (
 
   return { success: true, data: item };
 };
+
+export async function deleteInboxItem(id: string): Promise<ActionState> {
+  const t = await getTranslations();
+
+  const [error] = await to(
+    prisma.inboxItem.delete({ where: { id } }),
+  );
+
+  if (error) {
+    return { success: false, error: t("toast.failedToDelete") };
+  }
+
+  revalidatePath("/");
+
+  return { success: true, data: undefined };
+}

@@ -15,6 +15,12 @@
     "shortcutHint": "to jot",
     "delete": "Delete"
   },
+  "tasks": {
+    "empty": "No tasks yet!",
+    "emptyHint": "to create one",
+    "delete": "Delete",
+    "noDueDate": "No due date"
+  },
   "commandBar": {
     "title": "Jotter",
     "description": "Jot something down",
@@ -36,6 +42,9 @@
     "inboxSaved": "Item saved",
     "inboxDeleted": "Item deleted",
     "taskSaved": "Task created",
+    "taskDeleted": "Task deleted",
+    "taskCompleted": "Task completed",
+    "taskReopened": "Task reopened",
     "failedToSave": "Failed to save item",
     "failedToDelete": "Failed to delete item"
   },

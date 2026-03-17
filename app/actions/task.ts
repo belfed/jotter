@@ -64,3 +64,39 @@ export async function processInboxItemToTask(
 
   return { success: true, data: task };
 }
+
+export async function toggleTaskCompleted(
+  id: string,
+  completed: boolean,
+): Promise<ActionState<Task>> {
+  const t = await getTranslations();
+
+  const [error, task] = await to(
+    prisma.task.update({
+      where: { id },
+      data: { completed },
+    }),
+  );
+
+  if (error) {
+    return { success: false, error: t("toast.failedToSave") };
+  }
+
+  revalidatePath("/");
+
+  return { success: true, data: task };
+}
+
+export async function deleteTask(id: string): Promise<ActionState<Task>> {
+  const t = await getTranslations();
+
+  const [error, task] = await to(prisma.task.delete({ where: { id } }));
+
+  if (error) {
+    return { success: false, error: t("toast.failedToDelete") };
+  }
+
+  revalidatePath("/");
+
+  return { success: true, data: task };
+}

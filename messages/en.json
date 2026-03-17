@@ -13,13 +13,24 @@
     "empty": "Your inbox is empty!",
     "emptyHint": "to jot something",
     "shortcutHint": "to jot",
-    "delete": "Delete"
+    "delete": "Delete",
+    "new": "New item",
+    "createTitle": "New item",
+    "createPlaceholder": "What's on your mind?",
+    "create": "Save"
   },
   "tasks": {
     "empty": "No tasks yet!",
     "emptyHint": "to create one",
     "delete": "Delete",
-    "noDueDate": "No due date"
+    "noDueDate": "No due date",
+    "new": "New task",
+    "createTitle": "New task",
+    "titlePlaceholder": "Task title",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Optional description...",
+    "dueDateLabel": "Due date",
+    "create": "Save"
   },
   "commandBar": {
     "title": "Jotter",

@@ -15,14 +15,23 @@ export async function createTask(
 ): Promise<ActionState<Task>> {
   const t = await getTranslations();
   const title = formData.get("text");
+  const descriptionRaw = formData.get("description");
+  const dueDateRaw = formData.get("dueDate");
 
   if (typeof title !== "string" || title.trim() === "") {
     return { success: false, error: t("validation.textRequired") };
   }
 
+  const description =
+    typeof descriptionRaw === "string" && descriptionRaw.trim()
+      ? descriptionRaw.trim()
+      : undefined;
+  const dueDate =
+    typeof dueDateRaw === "string" && dueDateRaw ? new Date(dueDateRaw) : undefined;
+
   const [error, task] = await to(
     prisma.task.create({
-      data: { title: title.trim() },
+      data: { title: title.trim(), description, dueDate },
     }),
   );
 

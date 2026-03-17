@@ -6,25 +6,34 @@ import { toast } from "sonner";
 import { Inbox, ListChecks } from "lucide-react";
 
 import type { ItemType } from "@/lib/types";
-import { itemTypes, DEFAULT_ITEM_TYPE } from "@/lib/types";
+import { itemTypes, getItemTypeForRoute } from "@/lib/types";
 
 import { createInboxItem } from "@/app/actions/inbox";
 import { createTask } from "@/app/actions/task";
 
 import { cn } from "@/lib/utils";
 
+import { usePathname } from "@/i18n/navigation";
+
 import { CommandDialog } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
 import { Kbd } from "@/components/ui/kbd";
 
 export function CommandBar() {
+  const pathname = usePathname();
+  const contextualDefault = getItemTypeForRoute(pathname);
+
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
-  const [selectedType, setSelectedType] = useState<ItemType>(DEFAULT_ITEM_TYPE);
+  const [selectedType, setSelectedType] = useState<ItemType>(contextualDefault);
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const t = useTranslations();
+
+  useEffect(() => {
+    setSelectedType(contextualDefault);
+  }, [contextualDefault]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
@@ -41,7 +50,7 @@ export function CommandBar() {
     setOpen(value);
     if (!value) {
       setText("");
-      setSelectedType(DEFAULT_ITEM_TYPE);
+      setSelectedType(contextualDefault);
     }
   }
 
@@ -57,7 +66,7 @@ export function CommandBar() {
 
     if (result?.success) {
       setText("");
-      setSelectedType(DEFAULT_ITEM_TYPE);
+      setSelectedType(contextualDefault);
       toast.success(t(`toast.${type}Saved`));
     } else if (result?.success === false) {
       toast.error(result.error);

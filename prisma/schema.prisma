@@ -24,11 +24,12 @@ model InboxItem {
 }
 
 model Task {
-  id        String    @id @default(uuid())
-  title     String
-  completed Boolean   @default(false)
-  dueDate   DateTime?
-  createdAt DateTime  @default(now())
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  completed   Boolean   @default(false)
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
 
   inboxItemId String?    @unique
   inboxItem   InboxItem? @relation(fields: [inboxItemId], references: [id])

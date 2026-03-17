@@ -1,15 +1,24 @@
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import prisma from "@/lib/prisma";
 
+import { TaskCreateDialog } from "@/components/tasks/task-create-dialog";
 import { TaskList } from "@/components/tasks/task-list";
 
 export default async function TasksPage() {
-  const locale = await getLocale();
+  const [locale, t] = await Promise.all([getLocale(), getTranslations("nav")]);
 
   const tasks = await prisma.task.findMany({
-    orderBy: [{ completed: "asc" }, { createdAt: "desc" }],
+    orderBy: { createdAt: "desc" },
   });
 
-  return <TaskList tasks={tasks} locale={locale} />;
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-semibold">{t("tasks")}</h1>
+        <TaskCreateDialog />
+      </div>
+      <TaskList tasks={tasks} locale={locale} />
+    </div>
+  );
 }

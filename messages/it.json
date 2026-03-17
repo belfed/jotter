@@ -13,13 +13,24 @@
     "empty": "La tua inbox è vuota!",
     "emptyHint": "per annotare qualcosa",
     "shortcutHint": "per annotare",
-    "delete": "Elimina"
+    "delete": "Elimina",
+    "new": "Nuovo item",
+    "createTitle": "Nuovo item",
+    "createPlaceholder": "Cosa hai in mente?",
+    "create": "Salva"
   },
   "tasks": {
     "empty": "Nessun task!",
     "emptyHint": "per crearne uno",
     "delete": "Elimina",
-    "noDueDate": "Nessuna scadenza"
+    "noDueDate": "Nessuna scadenza",
+    "new": "Nuovo task",
+    "createTitle": "Nuovo task",
+    "titlePlaceholder": "Titolo del task",
+    "descriptionLabel": "Descrizione",
+    "descriptionPlaceholder": "Descrizione opzionale...",
+    "dueDateLabel": "Scadenza",
+    "create": "Salva"
   },
   "commandBar": {
     "title": "Jotter",

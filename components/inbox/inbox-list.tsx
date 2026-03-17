@@ -1,6 +1,5 @@
 "use client";
 
-import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { InboxIcon, MoreVertical, Trash2 } from "lucide-react";
@@ -22,18 +21,15 @@ import {
 import { Kbd } from "@/components/ui/kbd";
 
 function InboxListItem({ item }: { item: InboxItem }) {
-  const [isPending, startTransition] = useTransition();
   const t = useTranslations();
 
-  function handleDelete() {
-    startTransition(async () => {
-      const result = await deleteInboxItem(item.id);
-      if (result?.success) {
-        toast.success(t("toast.inboxDeleted"));
-      } else if (result?.success === false) {
-        toast.error(result.error);
-      }
-    });
+  async function handleDelete() {
+    const result = await deleteInboxItem(item.id);
+    if (result?.success) {
+      toast.success(t("toast.inboxDeleted"));
+    } else if (result?.success === false) {
+      toast.error(result.error);
+    }
   }
 
   return (
@@ -49,7 +45,6 @@ function InboxListItem({ item }: { item: InboxItem }) {
           <Button
             variant="ghost"
             size="icon"
-            disabled={isPending}
             className="size-8 shrink-0 text-muted-foreground"
           >
             <MoreVertical className="size-4" />

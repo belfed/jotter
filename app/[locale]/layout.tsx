@@ -3,7 +3,10 @@ import { notFound } from "next/navigation";
 
 import { routing } from "@/i18n/routing";
 
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { AppSidebar } from "@/components/app-sidebar";
+import { AppHeader } from "@/components/app-header";
 import { CommandBar } from "@/components/command-bar";
 
 export default async function LocaleLayout({
@@ -23,9 +26,15 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {children}
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <AppHeader />
+          <div className="flex-1 p-6">{children}</div>
+        </SidebarInset>
+      </SidebarProvider>
       <CommandBar />
-      <Toaster />
+      <Toaster duration={2000} />
     </NextIntlClientProvider>
   );
 }

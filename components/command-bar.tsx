@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, useTransition } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Inbox, ListChecks } from "lucide-react";
@@ -21,7 +21,6 @@ export function CommandBar() {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [selectedType, setSelectedType] = useState<ItemType>(DEFAULT_ITEM_TYPE);
-  const [isPending, startTransition] = useTransition();
   const formRef = useRef<HTMLFormElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,26 +45,24 @@ export function CommandBar() {
     }
   }
 
-  function submitAs(type: ItemType) {
-    if (!text.trim() || isPending) return;
+  async function submitAs(type: ItemType) {
+    if (!text.trim()) return;
 
     const formData = new FormData(formRef.current!);
 
-    startTransition(async () => {
-      const result =
-        type === "task"
-          ? await createTask(null, formData)
-          : await createInboxItem(null, formData);
+    const result =
+      type === "task"
+        ? await createTask(null, formData)
+        : await createInboxItem(null, formData);
 
-      if (result?.success) {
-        setText("");
-        setSelectedType(DEFAULT_ITEM_TYPE);
-        toast.success(t(`toast.${type}Saved`));
-      } else if (result?.success === false) {
-        toast.error(result.error);
-      }
-      inputRef.current?.focus();
-    });
+    if (result?.success) {
+      setText("");
+      setSelectedType(DEFAULT_ITEM_TYPE);
+      toast.success(t(`toast.${type}Saved`));
+    } else if (result?.success === false) {
+      toast.error(result.error);
+    }
+    inputRef.current?.focus();
   }
 
   function handleSubmit(e: React.SubmitEvent) {
@@ -103,7 +100,6 @@ export function CommandBar() {
           onKeyDown={handleKeyDown}
           placeholder={t("commandBar.placeholder")}
           autoComplete="off"
-          disabled={isPending}
           autoFocus
           className="h-12 border-0 text-base shadow-none focus-visible:ring-0"
         />

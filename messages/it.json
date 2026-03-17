@@ -2,6 +2,12 @@
   "metadata": {
     "title": "Jotter"
   },
+  "nav": {
+    "dashboard": "Dashboard",
+    "inbox": "Inbox",
+    "tasks": "Task",
+    "user": "Utente"
+  },
   "inbox": {
     "title": "Inbox",
     "empty": "La tua inbox è vuota!",

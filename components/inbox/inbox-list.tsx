@@ -11,7 +11,6 @@ import { deleteInboxItem } from "@/app/actions/inbox";
 import { formatRelativeTime } from "@/lib/format";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,9 +32,9 @@ function InboxListItem({ item }: { item: InboxItem }) {
   }
 
   return (
-    <div className="group flex items-center gap-2 px-4 py-2.5">
+    <div className="group flex items-center gap-2 px-3 py-2">
       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="wrap-break-word">{item.text}</span>
+        <span className="wrap-break-word text-sm">{item.text}</span>
         <span className="text-xs text-muted-foreground">
           {formatRelativeTime(item.createdAt, t)}
         </span>
@@ -45,14 +44,14 @@ function InboxListItem({ item }: { item: InboxItem }) {
           <Button
             variant="ghost"
             size="icon"
-            className="size-8 shrink-0 text-muted-foreground"
+            className="size-7 shrink-0 text-muted-foreground focus-visible:border-transparent focus-visible:ring-0"
           >
-            <MoreVertical className="size-4" />
+            <MoreVertical className="size-3.5" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={handleDelete} className="text-destructive">
-            <Trash2 className="size-4" />
+            <Trash2 className="size-3.5" />
             {t("inbox.delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -80,10 +79,10 @@ export function InboxList({ items }: { items: InboxItem[] }) {
   }
 
   return (
-    <Card className="gap-0 py-0 divide-y divide-border">
+    <div className="divide-y divide-border rounded-xl border">
       {items.map((item) => (
         <InboxListItem key={item.id} item={item} />
       ))}
-    </Card>
+    </div>
   );
 }

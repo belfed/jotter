@@ -30,7 +30,7 @@ export default async function LocaleLayout({
         <AppSidebar />
         <SidebarInset>
           <AppHeader />
-          <div className="flex-1 p-6">{children}</div>
+          <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
         </SidebarInset>
       </SidebarProvider>
       <CommandBar />

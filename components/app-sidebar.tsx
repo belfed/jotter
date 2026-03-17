@@ -9,7 +9,6 @@ import { Link } from "@/i18n/navigation";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -17,7 +16,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
   { key: "dashboard" as const, href: "/dashboard", icon: LayoutDashboard },
@@ -56,14 +54,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="mb-4 px-4">
-        <div className="flex items-center justify-between">
-          <span className="text-sm text-muted-foreground">
-            {t("user")}
-          </span>
-          <ThemeToggle />
-        </div>
-      </SidebarFooter>
     </Sidebar>
   );
 }

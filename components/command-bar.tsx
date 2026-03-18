@@ -2,12 +2,13 @@
 
 import { useRef, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { Inbox, ListChecks } from "lucide-react";
 
 import type { ItemType } from "@/lib/types";
 import { itemTypes, getItemTypeForRoute } from "@/lib/types";
 
-import { openInboxDialog } from "@/components/inbox/inbox-create-dialog";
+import { createInboxItem } from "@/app/actions/inbox";
 import { openTaskDialog } from "@/components/tasks/task-create-dialog";
 
 import { cn } from "@/lib/utils";
@@ -53,19 +54,30 @@ export function CommandBar() {
     }
   }
 
-  function submitAs(type: ItemType) {
+  async function submitAs(type: ItemType) {
     if (!text.trim()) return;
 
     const prefill = text.trim();
-    setText("");
-    setSelectedType(contextualDefault);
-    setOpen(false);
 
     if (type === "task") {
+      setText("");
+      setSelectedType(contextualDefault);
+      setOpen(false);
       openTaskDialog(prefill);
-    } else {
-      openInboxDialog(prefill);
+      return;
     }
+
+    const formData = new FormData(formRef.current!);
+    const result = await createInboxItem(null, formData);
+
+    if (result?.success) {
+      setText("");
+      setSelectedType(contextualDefault);
+      toast.success(t("toast.inboxSaved"));
+    } else if (result?.success === false) {
+      toast.error(result.error);
+    }
+    inputRef.current?.focus();
   }
 
   function handleSubmit(e: React.SubmitEvent) {

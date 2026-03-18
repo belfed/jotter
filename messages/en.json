@@ -47,6 +47,17 @@
     "title": "Jotter — Capture",
     "placeholder": "Quick capture..."
   },
+  "dashboard": {
+    "inboxNudge": "{count, plural, one {# item in inbox} other {# items in inbox}}",
+    "inboxNudgeHint": "to organize",
+    "upcoming": "Upcoming",
+    "overdue": "Overdue",
+    "today": "Today",
+    "thisWeek": "This week",
+    "later": "Later",
+    "allClear": "No upcoming tasks. You're all clear.",
+    "viewAllTasks": "All tasks"
+  },
   "inboxForm": {
     "placeholder": "What's on your mind?"
   },

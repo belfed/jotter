@@ -47,6 +47,17 @@
     "title": "Jotter — Capture",
     "placeholder": "Quick capture..."
   },
+  "dashboard": {
+    "inboxNudge": "{count, plural, one {# item in inbox} other {# item in inbox}}",
+    "inboxNudgeHint": "da organizzare",
+    "upcoming": "In arrivo",
+    "overdue": "In ritardo",
+    "today": "Oggi",
+    "thisWeek": "Questa settimana",
+    "later": "Più avanti",
+    "allClear": "Nessun task in scadenza. Tutto sotto controllo.",
+    "viewAllTasks": "Tutti i task"
+  },
   "inboxForm": {
     "placeholder": "Cosa hai in mente?"
   },

@@ -14,6 +14,7 @@
     "emptyHint": "to jot something",
     "shortcutHint": "to jot",
     "delete": "Delete",
+    "convertToTask": "Convert to task",
     "new": "New item",
     "createTitle": "New item",
     "createPlaceholder": "What's on your mind?",

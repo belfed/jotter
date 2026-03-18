@@ -17,6 +17,7 @@ export async function createTask(
   const title = formData.get("text");
   const descriptionRaw = formData.get("description");
   const dueDateRaw = formData.get("dueDate");
+  const inboxItemIdRaw = formData.get("inboxItemId");
 
   if (typeof title !== "string" || title.trim() === "") {
     return { success: false, error: t("validation.textRequired") };
@@ -28,41 +29,26 @@ export async function createTask(
       : undefined;
   const dueDate =
     typeof dueDateRaw === "string" && dueDateRaw ? new Date(dueDateRaw) : undefined;
+  const inboxItemId =
+    typeof inboxItemIdRaw === "string" && inboxItemIdRaw ? inboxItemIdRaw : undefined;
+
+  const taskData = {
+    title: title.trim(),
+    description,
+    dueDate,
+    inboxItemId,
+  };
 
   const [error, task] = await to(
-    prisma.task.create({
-      data: { title: title.trim(), description, dueDate },
-    }),
-  );
-
-  if (error) {
-    return { success: false, error: t("toast.failedToSave") };
-  }
-
-  revalidatePath("/");
-
-  return { success: true, data: task };
-}
-
-export async function processInboxItemToTask(
-  inboxItemId: string,
-): Promise<ActionState<Task>> {
-  const t = await getTranslations();
-
-  const [error, task] = await to(
-    prisma.$transaction(async (tx) => {
-      const inboxItem = await tx.inboxItem.update({
-        where: { id: inboxItemId },
-        data: { processedAt: new Date() },
-      });
-
-      return tx.task.create({
-        data: {
-          title: inboxItem.text,
-          inboxItemId: inboxItem.id,
-        },
-      });
-    }),
+    inboxItemId
+      ? prisma.$transaction(async (tx) => {
+          await tx.inboxItem.update({
+            where: { id: inboxItemId },
+            data: { processedAt: new Date() },
+          });
+          return tx.task.create({ data: taskData });
+        })
+      : prisma.task.create({ data: taskData }),
   );
 
   if (error) {

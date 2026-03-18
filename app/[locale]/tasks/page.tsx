@@ -2,7 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import prisma from "@/lib/prisma";
 
-import { TaskCreateDialog } from "@/components/tasks/task-create-dialog";
+import { CreateTaskButton } from "@/components/tasks/task-create-dialog";
 import { TaskList } from "@/components/tasks/task-list";
 
 export default async function TasksPage() {
@@ -16,7 +16,7 @@ export default async function TasksPage() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">{t("tasks")}</h1>
-        <TaskCreateDialog />
+        <CreateTaskButton />
       </div>
       <TaskList tasks={tasks} locale={locale} />
     </div>

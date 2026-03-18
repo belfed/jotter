@@ -8,6 +8,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { AppSidebar } from "@/components/app-sidebar";
 import { AppHeader } from "@/components/app-header";
 import { CommandBar } from "@/components/command-bar";
+import { InboxCreateDialog } from "@/components/inbox/inbox-create-dialog";
+import { TaskCreateDialog } from "@/components/tasks/task-create-dialog";
 
 export default async function LocaleLayout({
   children,
@@ -34,6 +36,8 @@ export default async function LocaleLayout({
         </SidebarInset>
       </SidebarProvider>
       <CommandBar />
+      <InboxCreateDialog />
+      <TaskCreateDialog />
       <Toaster duration={2000} />
     </NextIntlClientProvider>
   );

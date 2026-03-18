@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { Plus } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { createInboxItem } from "@/app/actions/inbox";
@@ -14,15 +14,41 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+
+export function openInboxDialog(prefillText?: string) {
+  document.dispatchEvent(
+    new CustomEvent("open-inbox-dialog", { detail: { text: prefillText ?? "" } }),
+  );
+}
+
+export function CreateInboxButton() {
+  const t = useTranslations("inbox");
+  return (
+    <Button size="sm" onClick={() => openInboxDialog()}>
+      <PlusIcon className="size-4" />
+      {t("new")}
+    </Button>
+  );
+}
 
 export function InboxCreateDialog() {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const t = useTranslations();
+
+  const handleEvent = useCallback((e: Event) => {
+    const detail = (e as CustomEvent<{ text: string }>).detail;
+    setText(detail.text);
+    setOpen(true);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("open-inbox-dialog", handleEvent);
+    return () => document.removeEventListener("open-inbox-dialog", handleEvent);
+  }, [handleEvent]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -47,12 +73,6 @@ export function InboxCreateDialog() {
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Plus className="size-4" />
-          {t("inbox.new")}
-        </Button>
-      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("inbox.createTitle")}</DialogTitle>

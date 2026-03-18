@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { Plus, ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, PlusIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { createTask } from "@/app/actions/task";
@@ -15,11 +15,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
+
+export function openTaskDialog(prefillTitle?: string, inboxItemId?: string) {
+  document.dispatchEvent(
+    new CustomEvent("open-task-dialog", {
+      detail: { title: prefillTitle ?? "", inboxItemId },
+    }),
+  );
+}
+
+export function CreateTaskButton() {
+  const t = useTranslations("tasks");
+  return (
+    <Button size="sm" onClick={() => openTaskDialog()}>
+      <PlusIcon className="size-4" />
+      {t("new")}
+    </Button>
+  );
+}
 
 export function TaskCreateDialog() {
   const [open, setOpen] = useState(false);
@@ -27,8 +44,23 @@ export function TaskCreateDialog() {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState<Date | undefined>(undefined);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [inboxItemId, setInboxItemId] = useState<string | undefined>(undefined);
   const formRef = useRef<HTMLFormElement>(null);
   const t = useTranslations();
+
+  const handleEvent = useCallback((e: Event) => {
+    const detail = (e as CustomEvent<{ title: string; inboxItemId?: string }>).detail;
+    setTitle(detail.title);
+    setDescription("");
+    setDueDate(undefined);
+    setInboxItemId(detail.inboxItemId);
+    setOpen(true);
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("open-task-dialog", handleEvent);
+    return () => document.removeEventListener("open-task-dialog", handleEvent);
+  }, [handleEvent]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -41,6 +73,7 @@ export function TaskCreateDialog() {
       setTitle("");
       setDescription("");
       setDueDate(undefined);
+      setInboxItemId(undefined);
       setOpen(false);
       toast.success(t("toast.taskSaved"));
     } else if (result?.success === false) {
@@ -54,22 +87,20 @@ export function TaskCreateDialog() {
       setTitle("");
       setDescription("");
       setDueDate(undefined);
+      setInboxItemId(undefined);
     }
   }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Plus className="size-4" />
-          {t("tasks.new")}
-        </Button>
-      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t("tasks.createTitle")}</DialogTitle>
         </DialogHeader>
         <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+          {inboxItemId && (
+            <input type="hidden" name="inboxItemId" value={inboxItemId} />
+          )}
           <Input
             name="text"
             value={title}

@@ -2,11 +2,12 @@
 
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { InboxIcon, MoreVertical, Trash2 } from "lucide-react";
+import { InboxIcon, ListChecks, MoreVertical, Trash2 } from "lucide-react";
 
 import type { InboxItem } from "@/app/generated/prisma/client";
 
 import { deleteInboxItem } from "@/app/actions/inbox";
+import { openTaskDialog } from "@/components/tasks/task-create-dialog";
 
 import { formatRelativeTime } from "@/lib/format";
 
@@ -50,6 +51,12 @@ function InboxListItem({ item }: { item: InboxItem }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <DropdownMenuItem
+            onClick={() => openTaskDialog(item.text, item.id)}
+          >
+            <ListChecks className="size-3.5" />
+            {t("inbox.convertToTask")}
+          </DropdownMenuItem>
           <DropdownMenuItem onClick={handleDelete} className="text-destructive">
             <Trash2 className="size-3.5" />
             {t("inbox.delete")}

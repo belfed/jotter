@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Source_Serif_4, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 import { cn } from "@/lib/utils";
@@ -9,9 +9,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const sourceSerif = Source_Serif_4({ subsets: ["latin"], variable: "--font-serif" });
-const ibmPlexMono = IBM_Plex_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   variable: "--font-mono",
 });
 
@@ -26,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      className={cn("font-sans", inter.variable, sourceSerif.variable, ibmPlexMono.variable)}
+      className={cn("font-sans", inter.variable, sourceSerif.variable, jetbrainsMono.variable)}
       suppressHydrationWarning
     >
       <body className="antialiased">

@@ -28,7 +28,7 @@ export function AppSidebar() {
   const t = useTranslations("nav");
 
   return (
-    <Sidebar>
+    <Sidebar className="hidden md:flex">
       <SidebarHeader className="px-4 py-3">
         <span className="text-lg font-bold tracking-tight">Jotter</span>
       </SidebarHeader>

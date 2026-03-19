@@ -7,6 +7,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { AppSidebar } from "@/components/app-sidebar";
 import { AppHeader } from "@/components/app-header";
+import { BottomNav } from "@/components/bottom-nav";
 import { CommandBar } from "@/components/command-bar";
 import { InboxCreateDialog } from "@/components/inbox/inbox-create-dialog";
 import { TaskCreateDialog } from "@/components/tasks/task-create-dialog";
@@ -32,9 +33,10 @@ export default async function LocaleLayout({
         <AppSidebar />
         <SidebarInset>
           <AppHeader />
-          <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
+          <main className="flex-1 px-4 py-6 pb-20 sm:px-6 md:pb-6">{children}</main>
         </SidebarInset>
       </SidebarProvider>
+      <BottomNav />
       <CommandBar />
       <InboxCreateDialog />
       <TaskCreateDialog />

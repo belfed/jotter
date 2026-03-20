@@ -72,11 +72,10 @@ function InboxNudge({ count }: { count: number }) {
         <Inbox className="size-4" />
       </div>
       <div className="flex-1 text-sm">
-        <span className="font-medium">
-          {t("dashboard.inboxNudge", { count })}
-        </span>
+        <span className="font-medium">{t("dashboard.inboxNudge", { count })}</span>
         <span className="text-muted-foreground">
-          {" "}&mdash; {t("dashboard.inboxNudgeHint")}
+          {" "}
+          &mdash; {t("dashboard.inboxNudgeHint")}
         </span>
       </div>
       <ArrowRight className="size-4 shrink-0 text-muted-foreground" />
@@ -84,13 +83,7 @@ function InboxNudge({ count }: { count: number }) {
   );
 }
 
-function DashboardTaskItem({
-  task,
-  locale,
-}: {
-  task: Task;
-  locale: string;
-}) {
+function DashboardTaskItem({ task, locale }: { task: Task; locale: string }) {
   const t = useTranslations();
   const today = startOfDay(new Date());
   const isOverdue = task.dueDate && startOfDay(task.dueDate) < today;
@@ -127,13 +120,7 @@ function DashboardTaskItem({
   );
 }
 
-function UpcomingTasks({
-  tasks,
-  locale,
-}: {
-  tasks: Task[];
-  locale: string;
-}) {
+function UpcomingTasks({ tasks, locale }: { tasks: Task[]; locale: string }) {
   const t = useTranslations();
   const groups = groupTasks(tasks, t);
 
@@ -160,11 +147,7 @@ function UpcomingTasks({
             </p>
             <div className="divide-y divide-border rounded-xl border">
               {group.tasks.map((task) => (
-                <DashboardTaskItem
-                  key={task.id}
-                  task={task}
-                  locale={locale}
-                />
+                <DashboardTaskItem key={task.id} task={task} locale={locale} />
               ))}
             </div>
           </div>

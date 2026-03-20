@@ -129,7 +129,11 @@ export function TaskCreateDialog() {
             <input
               type="hidden"
               name="dueDate"
-              value={dueDate ? dueDate.toISOString().split("T")[0] : ""}
+              value={
+                dueDate
+                  ? `${dueDate.getFullYear()}-${String(dueDate.getMonth() + 1).padStart(2, "0")}-${String(dueDate.getDate()).padStart(2, "0")}`
+                  : ""
+              }
             />
             <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
               <PopoverTrigger asChild>
@@ -147,6 +151,9 @@ export function TaskCreateDialog() {
                 <Calendar
                   mode="single"
                   selected={dueDate}
+                  classNames={{
+                    today: "border border-primary",
+                  }}
                   onSelect={(date) => {
                     setDueDate(date);
                     setCalendarOpen(false);

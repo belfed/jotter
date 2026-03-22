@@ -4,12 +4,20 @@ import prisma from "@/lib/prisma";
 
 import { CreateInboxButton } from "@/components/inbox/inbox-create-dialog";
 import { InboxList } from "@/components/inbox/inbox-list";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export default async function InboxPage() {
+  const session = await auth.api.getSession({ headers: await headers() });
   const t = await getTranslations("nav");
 
+  if (!session) {
+    redirect("/signin");
+  }
+
   const items = await prisma.inboxItem.findMany({
-    where: { processedAt: null },
+    where: { processedAt: null, userId: session.user.id },
     orderBy: { createdAt: "desc" },
   });
 

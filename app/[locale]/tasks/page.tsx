@@ -4,9 +4,17 @@ import prisma from "@/lib/prisma";
 
 import { CreateTaskButton } from "@/components/tasks/task-create-dialog";
 import { TaskList } from "@/components/tasks/task-list";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/dist/client/components/navigation";
+import { headers } from "next/dist/server/request/headers";
 
 export default async function TasksPage() {
+  const session = await auth.api.getSession({ headers: await headers() });
   const [locale, t] = await Promise.all([getLocale(), getTranslations("nav")]);
+
+  if (!session) {
+    redirect("/signin");
+  }
 
   const tasks = await prisma.task.findMany({
     orderBy: { createdAt: "desc" },
